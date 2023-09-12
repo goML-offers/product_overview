@@ -8,3 +8,4 @@ accelerate
 einops
 flask
 uvicorn
+python-multipart
