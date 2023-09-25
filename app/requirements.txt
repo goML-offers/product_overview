@@ -11,3 +11,5 @@ uvicorn
 python-multipart
 fastapi
 Pillow
+boto3
+python-dotenv
