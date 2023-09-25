@@ -9,3 +9,4 @@ einops
 flask
 uvicorn
 python-multipart
+fastapi
