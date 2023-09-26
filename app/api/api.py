@@ -23,14 +23,14 @@ def prod_overview(url): #amazon s3 url. The location of the image
   B_SYS, E_SYS = "<<SYS>>\n", "\n<</SYS>>\n\n"
   DEFAULT_SYSTEM_PROMPT = """\
   The structure of the output should look like this only, for example:
-
-  overview: 'some text', 'estimated_price': '$3'
-
+  {
+    "Product_Overview": "some text",
+    "Estimated_Price": "$x - $y",
+    "Product_Description”:”some text"
+  }
   this is just an example for the products. Give me output in these way. Do not generate any additional dialogues
-
   Your answers should not include any harmful, racist, sexist, toxic, dangerous content. Please ensure that your responses are socially unbiased, informative and positive.
-
-  Always generate a product description which is provided by the user. The description should be approximately for about 300 words. Also provide estimated price of the product"""
+  Always generate a Product_Overview, Estimated_Price, Product_Description which is provided by the user. Provide your answer in json format"""
 
   SYSTEM_PROMPT = B_SYS + DEFAULT_SYSTEM_PROMPT + E_SYS
 
@@ -82,8 +82,8 @@ def prod_overview(url): #amazon s3 url. The location of the image
   print(prompt)
   print("======")
   generated_text = generate(prompt)
-
-  return parse_text(generated_text)
+  text=re.sub(r'^.*?{', '{', generated_text)
+  return text
 
 
 def est_price(input_string):
