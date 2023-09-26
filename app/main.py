@@ -46,10 +46,17 @@ def upload_file(file: UploadFile = File(...)):
     s3 = session.resource('s3')
     s3.meta.client.upload_file(file_location, 'neuralgobucket', f"images/{file.filename}")
     s3_url=f"https://neuralgobucket.s3.amazonaws.com/images/{file.filename}"
-    try:
-        text=api.prod_overview(s3_url)
-        est_price=api.est_price(text)
-    except Exception as e:
-        print("error in generating text or estimated price regex")
-        return {"response":"","estimated_price":""}
-    return {"response":text,"estimated_price":est_price}
+    text=api.prod_overview(s3_url)
+    t=text.split('{', 1)[-1]
+    t='{'+t
+    text=t
+    print("********")
+    print(text)
+    print("********")
+    text=re.sub(r'^.*?{', '{', text)
+    text=re.sub(r'[^}]*$','',text)
+    print(text)
+    json_resp=json.loads(text)
+    print(json_resp)
+    #est_price=api.est_price(text)
+    return {"response":json_resp}
