@@ -7,7 +7,8 @@ import os
 import pandas as pd
 import boto3
 from dotenv import load_dotenv, find_dotenv
-
+import re
+import json
 load_dotenv(find_dotenv())
 
 AWS_ACCESS_KEY_ID = os.environ.get("aws_access_key_id")
